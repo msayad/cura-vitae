@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Quel est mon type de peau ?</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            background: #fffaf5;
+        }
+        h1 {
+            color: #e96e66;
+            text-align: center;
+        }
+        .question {
+            margin-top: 20px;
+        }
+        label {
+            display: block;
+            margin: 5px 0;
+        }
+        .action-line {
+            display: flex;
+            align-items: center;
+            margin-top: 30px;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #e96e66;
+            color: white;
+            border: none;
+            font-size: 1em;
+            cursor: pointer;
+        }
+        #result {
+            margin-left: 60px;
+            margin-top: 23px;
+            font-weight: bold;
+            font-size: 1.1em;
+            color: #e96e66;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Quel est mon type de peau ?</h1>
+
+<form id="quizForm">
+    <div class="question">
+        <p>1. Au cours de la journée, votre peau a tendance à briller :</p>
+        <label><input type="radio" name="q1" value="0"> Jamais</label>
+        <label><input type="radio" name="q1" value="1"> Très rarement</label>
+        <label><input type="radio" name="q1" value="2"> Souvent</label>
+        <label><input type="radio" name="q1" value="3"> Toujours</label>
+    </div>
+
+    <div class="question">
+        <p>2. Vos pores sont plutôt :</p>
+        <label><input type="radio" name="q2" value="0"> Invisibles</label>
+        <label><input type="radio" name="q2" value="1"> Très peu visibles</label>
+        <label><input type="radio" name="q2" value="2"> Visibles</label>
+        <label><input type="radio" name="q2" value="3"> Très visibles</label>
+    </div>
+
+    <div class="question">
+        <p>3. Avez-vous des imperfections ?</p>
+        <label><input type="radio" name="q3" value="0"> Jamais</label>
+        <label><input type="radio" name="q3" value="1"> Rarement</label>
+        <label><input type="radio" name="q3" value="2"> Parfois</label>
+        <label><input type="radio" name="q3" value="3"> Souvent</label>
+    </div>
+
+    <div class="question">
+        <p>4. Après la douche ou en hiver, ressentez-vous des tiraillements ?</p>
+        <label><input type="radio" name="q4" value="0"> Rarement</label>
+        <label><input type="radio" name="q4" value="1"> Toujours</label>
+        <label><input type="radio" name="q4" value="2"> Souvent</label>
+        <label><input type="radio" name="q4" value="3"> Jamais</label>
+    </div>
+
+    <div class="question">
+        <p>5. Au toucher, votre peau est plutôt :</p>
+        <label><input type="radio" name="q5" value="0"> Rebondie, fraîche</label>
+        <label><input type="radio" name="q5" value="1"> Sèche, rêche</label>
+        <label><input type="radio" name="q5" value="2"> Grasse sur la zone T</label>
+        <label><input type="radio" name="q5" value="3"> Grasse</label>
+    </div>
+
+    <div class="action-line">
+        <button type="button" onclick="calculate()">Valider</button>
+        <div id="result"></div>
+    </div>
+</form>
+
+<script>
+    function calculate() {
+        let total = 0;
+        for (let i = 1; i <= 5; i++) {
+            const radios = document.getElementsByName('q' + i);
+            let answered = false;
+            for (let radio of radios) {
+                if (radio.checked) {
+                    total += parseInt(radio.value);
+                    answered = true;
+                    break;
+                }
+            }
+            if (!answered) {
+                document.getElementById('result').innerText = "Merci de répondre à toutes les questions.";
+                return;
+            }
+        }
+
+        let resultText = "";
+        if (total === 0) {
+            resultText = "Type de peau : Normale";
+        } else if (total <= 5) {
+            resultText = "Type de peau : Sèche";
+        } else if (total <= 10) {
+            resultText = "Type de peau : Mixte";
+        } else {
+            resultText = "Type de peau : Grasse";
+        }
+
+        document.getElementById('result').innerText = resultText + " (Score : " + total + " points)";
+    }
+</script>
+
+</body>
+</html>
